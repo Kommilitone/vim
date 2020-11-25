@@ -1,0 +1,6 @@
+name: Sandbox
+root: ~/
+
+windows:
+  - Main:
+      - cd

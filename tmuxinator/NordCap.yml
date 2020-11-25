@@ -1,0 +1,12 @@
+name: NordCap
+root: ~/
+
+windows:
+  - Main:
+    - cd ~/WebstormProjects/JS-ApproLogic-NordCap
+    - nvim
+  - Edits:
+    - cd ~/WebstormProjects/JS-ApproLogic-NordCap
+  - Runs:
+    - cd ~/WebstormProjects/JS-ApproLogic-NordCap
+    - npm run dev

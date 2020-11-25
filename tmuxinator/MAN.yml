@@ -1,0 +1,9 @@
+name: MAN
+root: ~/
+
+windows:
+  - Main:
+    - cd ~/WebstormProjects/JS-ApproLogic-MAN
+    - nvim
+  - Edits:
+    - cd ~/WebstormProjects/JS-ApproLogic-MAN

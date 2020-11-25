@@ -1,0 +1,6 @@
+name: SSH
+root: ~/
+
+windows:
+  - Main:
+      - ssh root@185.255.134.65

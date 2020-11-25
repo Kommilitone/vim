@@ -1,0 +1,12 @@
+name: Dentsply
+root: ~/
+
+windows:
+  - Main:
+    - cd ~/WebstormProjects/JS-ApproLogic-Dentsply
+    - nvim
+  - Edits:
+    - cd ~/WebstormProjects/JS-ApproLogic-Dentsply
+  - Runs:
+    - cd ~/WebstormProjects/JS-ApproLogic-Dentsply
+    - npm run dev

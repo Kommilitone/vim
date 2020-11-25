@@ -1,0 +1,12 @@
+name: Goettfert
+root: ~/
+
+windows:
+  - Main:
+    - cd ~/WebstormProjects/JS-ApproLogic-Goettfert
+    - nvim
+  - Edits:
+    - cd ~/WebstormProjects/JS-ApproLogic-Goettfert
+  - Runs:
+    - cd ~/WebstormProjects/JS-ApproLogic-Goettfert
+    - npm run dev
