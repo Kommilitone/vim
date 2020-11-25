@@ -70,9 +70,7 @@ plugins=(
   z
   zsh-autosuggestions
   zsh-syntax-highlighting
-  colored-man-pages
   urltools
-  brew
   vi-mode
 )
   # web-search
@@ -107,10 +105,11 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 alias zconf="vim ~/.zshrc"
 alias vconf="vim ~/.vimrc"
+alias tconf="vim ~/.tmux.conf"
 
 alias en="trans :en"
 alias de="trans :de"
-alias ra="ranger"
+alias r="ranger"
 alias chrome="open -a 'Google Chrome'"
 alias json="python -m json.tool"
 alias o="open"
@@ -120,18 +119,23 @@ alias uv="~/vim/update-vim.sh"
 alias pv="~/vim/pull-vim.sh"
 alias ap="bat ~/ApproLogic/ApproLogicNotes.txt"
 alias base="node ~/vim/base32.js"
-alias yo="open -a yoink"
 alias n="nvim"
 alias vim="nvim"
 alias m="mvim"
 alias ctags="`brew --prefix`/bin/ctags"
-alias t="ts-node"
+alias ta="tmux attach"
+alias ts="tmux ls"
+alias tn="tmux new-session -s"
+alias cl="clear"
+alias g="grunt"
+alias gs="grunt setup"
+alias gsd="grunt setup default"
+alias pc="pbcopy"
+alias pp="pbpaste"
+alias tts="tmuxinator start"
+alias tk="tmux kill-session -t"
 
 stty -ixon
-
-export LC_CTYPE=de_DE.UTF-8
-export LC_ALL=de_DE.UTF-8
-export LANG=de_DE.UTF-8
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 

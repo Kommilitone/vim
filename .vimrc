@@ -12,25 +12,25 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
-Plugin 'git@github.com:junegunn/fzf.vim.git'
-Plugin 'git@github.com:morhetz/gruvbox.git'
-Plugin 'git@github.com:jiangmiao/auto-pairs.git'
-Plugin 'git@github.com:terryma/vim-expand-region.git'
-Plugin 'git@github.com:tpope/vim-surround.git'
-Plugin 'git@github.com:tpope/vim-repeat.git'
-Plugin 'git@github.com:airblade/vim-gitgutter.git'
-Plugin 'git@github.com:itchyny/lightline.vim.git'
-Plugin 'git@github.com:heavenshell/vim-jsdoc.git'
-Plugin 'git@github.com:terryma/vim-multiple-cursors.git'
-Plugin 'git@github.com:sheerun/vim-polyglot.git'
-Plugin 'git@github.com:dense-analysis/ale.git'
-Plugin 'git@github.com:dyng/ctrlsf.vim.git'
-Plugin 'git@github.com:kevinhwang91/rnvimr.git'
-Plugin 'git@github.com:tomtom/tcomment_vim.git'
-Plugin 'git@github.com:ChristianChiarulli/codi.vim.git'
-Plugin 'git@github.com:chrisbra/Colorizer.git'
-Plugin 'voldikss/vim-floaterm'
-Plugin 'git@github.com:justinmk/vim-sneak.git'
+Plugin 'junegunn/fzf.vim.git'
+Plugin 'morhetz/gruvbox.git'
+Plugin 'jiangmiao/auto-pairs.git'
+Plugin 'terryma/vim-expand-region.git'
+Plugin 'tpope/vim-surround.git'
+Plugin 'tpope/vim-repeat.git'
+Plugin 'airblade/vim-gitgutter.git'
+Plugin 'itchyny/lightline.vim.git'
+Plugin 'heavenshell/vim-jsdoc.git'
+Plugin 'terryma/vim-multiple-cursors.git'
+Plugin 'sheerun/vim-polyglot.git'
+Plugin 'dense-analysis/ale.git'
+Plugin 'dyng/ctrlsf.vim.git'
+Plugin 'kevinhwang91/rnvimr.git'
+Plugin 'tomtom/tcomment_vim.git'
+Plugin 'chrisbra/Colorizer.git'
+Plugin 'justinmk/vim-sneak.git'
+Plugin 'mhinz/vim-startify.git'
+Plugin 'mattn/emmet-vim.git'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
 " All of your Plugins must be added before the following line
@@ -80,7 +80,7 @@ set so=7
 set nowrap
 
 " More space for displaying messages
-set cmdheight=2
+set cmdheight=1
 
 " Faster completion
 set updatetime=300                      
@@ -124,11 +124,6 @@ set novisualbell
 set t_vb=
 set tm=500
 
-" Properly disable sound on errors on MacVim
-if has("gui_macvim")
-    autocmd GUIEnter * set vb t_vb=
-endif
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -140,14 +135,6 @@ if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set t_Co=256
-    set guitablabel=%M\ %t
-endif
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -316,26 +303,6 @@ function! VisualSelection(direction, extra_filter) range
     let @" = l:saved_reg
 endfunction
 
-if has("gui_macvim")
-  " Press Ctrl-Tab to switch between open tabs (like browser tabs) to 
-  " the right side. Ctrl-Shift-Tab goes the other way.
-  noremap <C-Tab> :tabnext<CR>
-  noremap <C-S-Tab> :tabprev<CR>
-
-  " Switch to specific tab numbers with Command-number
-  noremap <D-1> :tabn 1<CR>
-  noremap <D-2> :tabn 2<CR>
-  noremap <D-3> :tabn 3<CR>
-  noremap <D-4> :tabn 4<CR>
-  noremap <D-5> :tabn 5<CR>
-  noremap <D-6> :tabn 6<CR>
-  noremap <D-7> :tabn 7<CR>
-  noremap <D-8> :tabn 8<CR>
-  noremap <D-9> :tabn 9<CR>
-  " Command-0 goes to the last tab
-  noremap <D-0> :tablast<CR>
-endif
-
 map <C-d> 20j
 map <C-u> 20k
 
@@ -349,8 +316,8 @@ catch
   set diffopt-=internal
 endtry
 
-map <leader>3 :diffget 3<cr>
-map <leader>2 :diffget 2<cr>
+map <leader>l :diffget 3<cr>
+map <leader>h :diffget 2<cr>
 map <leader>1 :diffget<cr>
 
 " How many spaces are used as Tab
@@ -358,7 +325,7 @@ set tabstop=2
 set shiftwidth=2
 
 " Set vertical and horizontal orientation lines
-set colorcolumn=100
+set colorcolumn=80
 
 set softtabstop=2
 
@@ -370,7 +337,7 @@ let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_text_changed = 1
 let g:ale_linters = {'javascript': ['eslint']}
 let g:ale_fixers = [ 'eslint' ]
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all --print-width 100'
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all --print-width 80'
 let g:ale_linters_explicit = 1
 let g:ale_fix_on_save = 1
 
@@ -383,22 +350,6 @@ set rtp+=/usr/local/opt/fzf
 
 nmap § :Buffers<CR>
 
-"EXTENDED
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => GUI related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set font according to system
-if has("mac") || has("macunix")
-    set gfn=IBM\ Plex\ Mono:h14,Hack:h14,Source\ Code\ Pro:h15,Menlo:h15
-elseif has("win16") || has("win32")
-    set gfn=IBM\ Plex\ Mono:h14,Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
-elseif has("gui_gtk2")
-    set gfn=IBM\ Plex\ Mono:h14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("linux")
-    set gfn=IBM\ Plex\ Mono:h14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("unix")
-    set gfn=Monospace\ 11
-endif
 
 " Disable scrollbars (real hackers don't use scrollbars for navigation!)
 set guioptions-=r
@@ -457,21 +408,30 @@ nmap <c-q> :Files<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
-
+" let g:lightline = {
+"       \ 'colorscheme': 'wombat',
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ],
+"       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+"       \ },
+"       \ 'component_function': {
+"       \   'gitbranch': 'FugitiveHead'
+"       \ },
+"       \ }
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
-      \             ['fugitive', 'readonly', 'filename', 'modified'] ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified'] ],
       \   'right': [ [ 'lineinfo' ], ['percent'] ]
       \ },
       \ 'component': {
       \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
       \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
       \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
       \ },
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
@@ -526,16 +486,16 @@ let g:multi_cursor_next_key            = '<C-s>'
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.jsx, *.vue, *.js'
 
 " search with space
-nmap <Space> /
-nmap <C-Space> ?
+" nmap <Space> /
+" nmap <S-Space> ?
 
-set foldclose=all " Close folds if you leave them in any way
-set foldcolumn=1 " Show the foldcolumn
-set foldenable " Turn on folding
-set foldlevel=1 " Autofold everything by default
-set foldmethod=syntax " Fold on the indent
-set foldnestmax=1 " I only like to fold outer functions
-set foldopen=all " Open folds if you touch them in any way
+" set foldclose=all " Close folds if you leave them in any way
+" set foldcolumn=1 " Show the foldcolumn
+" set foldenable " Turn on folding
+" set foldlevel=1 " Autofold everything by default
+" set foldmethod=syntax " Fold on the indent
+" set foldnestmax=1 " I only like to fold outer functions
+" set foldopen=all " Open folds if you touch them in any way
 
 " remove all mappings from csv plugin
 let g:no_csv_maps = 1
@@ -554,7 +514,6 @@ set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-"
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -612,8 +571,6 @@ nmap <leader>9 :tabn 9<CR>
 
 nmap <C-t> :tabnew<CR>
 
-nmap <leader>f :FloatermNew<CR>
-
 " map s :BLines<CR>
 
 xnoremap > >gv
@@ -642,4 +599,7 @@ nmap <C-e> :call fzf#run({
 
 let g:sneak#label = 1
 
-let g:sneak#target_labels = "asdfghjklqwertyuiopzxcvbnm[];"
+let g:sneak#target_labels = "asfghjklqwertyuiopzxbnm[];"
+
+" tex preview
+let g:livepreview_previewer = 'open -a Preview'
