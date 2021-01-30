@@ -24,7 +24,7 @@
 #
 # Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
 
-snippet clo "console.log()" b
+snippet clo "console.log()" i
 console.log($1)
 endsnippet
 
@@ -36,6 +36,40 @@ switch ($1) {
 	default:
 		$4
 }
+endsnippet
+
+snippet then "then" b
+	.then(function($1){
+		$2
+	})
+endsnippet
+
+snippet catch "catch" b
+	.catch(function($1){
+		$2
+	})
+endsnippet
+
+snippet fun "fun" i
+function($1) {
+	$2
+}$3
+endsnippet
+
+snippet pro "prototype" i
+$1.prototype.$2 = function($3) {
+	$4
+};
+endsnippet
+
+snippet self "self" b
+var self = this;
+endsnippet
+
+snippet forEach "forEach" b
+$1.forEach(function($2) {
+	$3
+})
 endsnippet
 
 snippet map "map" b
@@ -56,6 +90,66 @@ $1.reduce(function($2) {
 }, $3)
 endsnippet
 
+snippet on "event" b
+$1.on('$2', $3);
+endsnippet
+
+snippet camel "camel" i
+// eslint-disable-line camelcase
+endsnippet
+
+snippet describe "describe" b
+describe('$1', () => {
+  it('$2', $3 () => {
+		$4
+  });
+});
+endsnippet
+
+snippet test "test" b
+test('$1', $2 () => {
+	$3
+});
+endsnippet
+
+snippet it "it" b
+it('$1', $2 () => {
+  const input = $3
+
+  const res = $4
+
+  expect(res).$5($6);
+});
+endsnippet
+
+snippet ete "ete" b
+expect($1).toEqual($2);
+endsnippet
+
+snippet toHaveBeenCalledWith "toHaveBeenCalledWith" b
+expect($1).toHaveBeenCalledWith($2);
+endsnippet
+
+snippet toHaveBeenCalledTimes "toHaveBeenCalledTimes" b
+expect($1).toHaveBeenCalledTimes($2);
+endsnippet
+
+snippet unit "unit" b
+/////////////////////////////////////////////////////////////////////////////
+///////////////////////////// UNIT TESTS ////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+endsnippet
+
+snippet integration "integration" b
+/////////////////////////////////////////////////////////////////////////////
+////////////////////////// INTEGRATION TESTS ////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+endsnippet
+
+snippet arr "arr" i
+($1) => $2
+endsnippet
+
 snippet t "type" i
 ($1: $2)$3
 endsnippet
@@ -64,7 +158,7 @@ snippet as "import" b
 import $1 as $2 from '$3';
 endsnippet
 
-snippet import "import" b
+snippet im "import" b
 import {$1} from '$2';
 endsnippet
 

@@ -134,6 +134,7 @@ alias pc="pbcopy"
 alias pp="pbpaste"
 alias tts="tmuxinator start"
 alias tk="tmux kill-session -t"
+alias d="docker"
 
 stty -ixon
 

@@ -20,10 +20,9 @@ Plugin 'tpope/vim-surround.git'
 Plugin 'tpope/vim-repeat.git'
 Plugin 'airblade/vim-gitgutter.git'
 Plugin 'itchyny/lightline.vim.git'
-Plugin 'heavenshell/vim-jsdoc.git'
 Plugin 'terryma/vim-multiple-cursors.git'
 Plugin 'sheerun/vim-polyglot.git'
-Plugin 'dense-analysis/ale.git'
+Plugin 'diepm/vim-rest-console'
 Plugin 'dyng/ctrlsf.vim.git'
 Plugin 'kevinhwang91/rnvimr.git'
 Plugin 'tomtom/tcomment_vim.git'
@@ -331,15 +330,7 @@ set softtabstop=2
 
 let g:javascript_plugin_flow = 1
 
-nnoremap <Tab> <C-^>
-
-let g:ale_lint_on_insert_leave = 1
-let g:ale_lint_on_text_changed = 1
-let g:ale_linters = {'javascript': ['eslint']}
-let g:ale_fixers = [ 'eslint' ]
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all --print-width 80'
-let g:ale_linters_explicit = 1
-let g:ale_fix_on_save = 1
+nnoremap <Space> <C-^>
 
 " :set splitright
 
@@ -542,9 +533,6 @@ nmap <silent> gr <Plug>(coc-references)
 
 imap <C-j> <Plug>(coc-snippets-expand)
 
-nmap <C-k> :bprevious <CR>
-nmap <C-j> :bnext <CR>
-
 set tags=./tags,tags;$HOME
 
 " Use K to show documentation in preview window.
@@ -602,8 +590,11 @@ nmap <C-e> :call fzf#run({
 \})<CR>
 
 let g:sneak#label = 1
+let g:sneak#streak = 1
 
 let g:sneak#target_labels = "asfghjklqwertyuiopzxbnm[];"
 
 " tex preview
 let g:livepreview_previewer = 'open -a Preview'
+
+map <leader>f :silent !pdflatex --interaction=batchmode cv.tex && open -a Preview cv.pdf<CR>
