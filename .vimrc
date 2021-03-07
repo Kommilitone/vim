@@ -5,8 +5,6 @@ filetype off                  " required
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -28,26 +26,15 @@ Plugin 'kevinhwang91/rnvimr.git'
 Plugin 'tomtom/tcomment_vim.git'
 Plugin 'chrisbra/Colorizer.git'
 Plugin 'justinmk/vim-sneak.git'
-Plugin 'mhinz/vim-startify.git'
 Plugin 'mattn/emmet-vim.git'
+Plugin 'preservim/tagbar.git'
+Plugin 'kassio/neoterm.git'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-"
-"
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -218,13 +205,6 @@ set laststatus=2
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
-" if has("mac") || has("macunix")
-"   nmap <D-j> <M-j>
-"   nmap <D-k> <M-k>
-"   vmap <D-j> <M-j>
-"   vmap <D-k> <M-k>
-" endif
-
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
     let save_cursor = getpos(".")
@@ -243,7 +223,7 @@ endif
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spesl!<cr>
+map <leader>ss :setlocal spell!<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
@@ -330,7 +310,7 @@ set softtabstop=2
 
 let g:javascript_plugin_flow = 1
 
-nnoremap <Space> <C-^>
+" nnoremap <Space> <C-^>
 
 " :set splitright
 
@@ -480,23 +460,11 @@ let g:multi_cursor_next_key            = '<C-s>'
 " auto html tags filetypes
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.jsx, *.vue, *.js'
 
-" search with space
-" nmap <Space> /
-" nmap <S-Space> ?
-
-" set foldclose=all " Close folds if you leave them in any way
-" set foldcolumn=1 " Show the foldcolumn
-" set foldenable " Turn on folding
-" set foldlevel=1 " Autofold everything by default
-" set foldmethod=syntax " Fold on the indent
-" set foldnestmax=1 " I only like to fold outer functions
-" set foldopen=all " Open folds if you touch them in any way
-
 " remove all mappings from csv plugin
 let g:no_csv_maps = 1
 
 " jumps to exact mark position
-nnoremap ' `
+" nnoremap ' `
 
 " Some servers have issues with backup files, see #649
 set nowritebackup
@@ -561,40 +529,53 @@ nmap <leader>7 :tabn 7<CR>
 nmap <leader>8 :tabn 8<CR>
 nmap <leader>9 :tabn 9<CR>
 
-nmap <C-t> :tabnew<CR>
-
-" map s :BLines<CR>
+nmap <leader>t :tabnew<CR>
 
 xnoremap > >gv
 xnoremap < <gv
 
-function! HandleFZF(file)
-    let l:bar = substitute(a:file, "\\", "", "g")
-    call append(line('.'), l:bar)
-    " execute '!echo '.l:bar
-endfunction
-command! -nargs=1 HandleFZF :call HandleFZF(<f-args>)
-
-function! s:buffer_lines()
-  let res = []
-  call extend(res, getbufline(bufname(),0,"$"))
-  return res
-endfunction
-
-
-nmap <C-e> :call fzf#run({
-\   'source':  <sid>buffer_lines(),
-\   'sink':    'HandleFZF',
-\   'options': '--layout=reverse --multi',
-\   'window': {'width': 0.9, 'height': 0.6}
-\})<CR>
-
 let g:sneak#label = 1
-let g:sneak#streak = 1
-
-let g:sneak#target_labels = "asfghjklqwertyuiopzxbnm[];"
+let g:sneak#use_ic_scs = 1
 
 " tex preview
 let g:livepreview_previewer = 'open -a Preview'
 
+" for working with latex
 map <leader>f :silent !pdflatex --interaction=batchmode cv.tex && open -a Preview cv.pdf<CR>
+
+nmap <C-E> :Rg <CR>
+
+nmap <C-L> :Lines <CR>
+nmap <C-B> :BLines <CR>
+
+" for fzf preview window
+let $BAT_THEME='gruvbox'
+
+" let g:fzf_preview_window = ['down:70%', 'ctrl-/']
+let g:fzf_height = 100
+
+" FZF rg layout
+command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!{apps/android/*,apps/ios/*,apps/puppeteer/*,apps/kereneia/*,src/data/*,src/client/translations/*,src/client/modules/translations/*,package*}' --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'down:70%', 'ctrl-/'), <bang>0)
+
+" Set marks for last open filetype
+nnoremap <Space>c 'C
+nnoremap <Space>j 'J
+nnoremap <Space>s 'S
+nnoremap <Space>t 'T
+nnoremap <Space>x 'X
+nnoremap <Space>h 'H
+
+augroup VIMRC
+  autocmd!
+  autocmd BufLeave *.css,*.scss normal! mC
+  autocmd BufLeave *.json       normal! mS
+  autocmd BufLeave *.js,*.ts    normal! mJ
+  autocmd BufLeave *.test.js    normal! mT
+  autocmd BufLeave *.jsx        normal! mX
+  autocmd BufLeave *.html       normal! mH
+augroup END
+
+nmap <C-t> :TagbarToggle <CR>
+let g:tagbar_width = 80
+
+nnoremap <leader>vs :exec "!code " . expand("%:p") <CR>:redraw!<CR> 

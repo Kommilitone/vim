@@ -100,7 +100,7 @@ endsnippet
 
 snippet describe "describe" b
 describe('$1', () => {
-	$2
+
 });
 endsnippet
 
@@ -110,13 +110,9 @@ test('$1', $2 () => {
 });
 endsnippet
 
-snippet it "it" i
+snippet it "it" b
 it('$1', $2 () => {
-  const input = $3
-
-  const res = $4
-
-  expect(res).$5($6);
+	$3
 });
 endsnippet
 

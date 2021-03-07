@@ -1,18 +1,21 @@
-(function() {
-  'use strict';
+(function () {
+  "use strict";
 
-  var root = typeof window === 'object' ? window : {};
+  var root = typeof window === "object" ? window : {};
   var NODE_JS =
     !root.HI_BASE32_NO_NODE_JS &&
-    typeof process === 'object' &&
+    typeof process === "object" &&
     process.versions &&
     process.versions.node;
   if (NODE_JS) {
     root = global;
   }
-  var COMMON_JS = !root.HI_BASE32_NO_COMMON_JS && typeof module === 'object' && module.exports;
-  var AMD = typeof define === 'function' && define.amd;
-  var BASE32_ENCODE_CHAR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'.split('');
+  var COMMON_JS =
+    !root.HI_BASE32_NO_COMMON_JS &&
+    typeof module === "object" &&
+    module.exports;
+  var AMD = typeof define === "function" && define.amd;
+  var BASE32_ENCODE_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".split("");
   var BASE32_DECODE_CHAR = {
     A: 0,
     B: 1,
@@ -40,35 +43,35 @@
     X: 23,
     Y: 24,
     Z: 25,
-    '2': 26,
-    '3': 27,
-    '4': 28,
-    '5': 29,
-    '6': 30,
-    '7': 31,
+    2: 26,
+    3: 27,
+    4: 28,
+    5: 29,
+    6: 30,
+    7: 31,
   };
 
   var blocks = [0, 0, 0, 0, 0, 0, 0, 0];
 
-  var throwInvalidUtf8 = function(position, partial) {
+  var throwInvalidUtf8 = function (position, partial) {
     if (partial.length > 10) {
-      partial = '...' + partial.substr(-10);
+      partial = "..." + partial.substr(-10);
     }
     var err = new Error(
-      'Decoded data is not valid UTF-8.' +
-        ' Maybe try base32.decode.asBytes()?' +
-        ' Partial data after reading ' +
+      "Decoded data is not valid UTF-8." +
+        " Maybe try base32.decode.asBytes()?" +
+        " Partial data after reading " +
         position +
-        ' bytes: ' +
+        " bytes: " +
         partial +
-        ' <-'
+        " <-"
     );
     err.position = position;
     throw err;
   };
 
-  var toUtf8String = function(bytes) {
-    var str = '',
+  var toUtf8String = function (bytes) {
+    var str = "",
       length = bytes.length,
       i = 0,
       followingChars = 0,
@@ -118,11 +121,11 @@
     return str;
   };
 
-  var decodeAsBytes = function(base32Str) {
+  var decodeAsBytes = function (base32Str) {
     if (!/^[A-Z2-7=]+$/.test(base32Str)) {
-      throw new Error('Invalid base32 characters');
+      throw new Error("Invalid base32 characters");
     }
-    base32Str = base32Str.replace(/=/g, '');
+    base32Str = base32Str.replace(/=/g, "");
     var v1,
       v2,
       v3,
@@ -190,13 +193,13 @@
     return bytes;
   };
 
-  var encodeAscii = function(str) {
+  var encodeAscii = function (str) {
     var v1,
       v2,
       v3,
       v4,
       v5,
-      base32Str = '',
+      base32Str = "",
       length = str.length;
     for (var i = 0, count = parseInt(length / 5) * 5; i < count; ) {
       v1 = str.charCodeAt(i++);
@@ -219,7 +222,10 @@
     var remain = length - count;
     if (remain === 1) {
       v1 = str.charCodeAt(i);
-      base32Str += BASE32_ENCODE_CHAR[v1 >>> 3] + BASE32_ENCODE_CHAR[(v1 << 2) & 31] + '======';
+      base32Str +=
+        BASE32_ENCODE_CHAR[v1 >>> 3] +
+        BASE32_ENCODE_CHAR[(v1 << 2) & 31] +
+        "======";
     } else if (remain === 2) {
       v1 = str.charCodeAt(i++);
       v2 = str.charCodeAt(i);
@@ -228,7 +234,7 @@
         BASE32_ENCODE_CHAR[((v1 << 2) | (v2 >>> 6)) & 31] +
         BASE32_ENCODE_CHAR[(v2 >>> 1) & 31] +
         BASE32_ENCODE_CHAR[(v2 << 4) & 31] +
-        '====';
+        "====";
     } else if (remain === 3) {
       v1 = str.charCodeAt(i++);
       v2 = str.charCodeAt(i++);
@@ -239,7 +245,7 @@
         BASE32_ENCODE_CHAR[(v2 >>> 1) & 31] +
         BASE32_ENCODE_CHAR[((v2 << 4) | (v3 >>> 4)) & 31] +
         BASE32_ENCODE_CHAR[(v3 << 1) & 31] +
-        '===';
+        "===";
     } else if (remain === 4) {
       v1 = str.charCodeAt(i++);
       v2 = str.charCodeAt(i++);
@@ -253,12 +259,12 @@
         BASE32_ENCODE_CHAR[((v3 << 1) | (v4 >>> 7)) & 31] +
         BASE32_ENCODE_CHAR[(v4 >>> 2) & 31] +
         BASE32_ENCODE_CHAR[(v4 << 3) & 31] +
-        '=';
+        "=";
     }
     return base32Str;
   };
 
-  var encodeUtf8 = function(str) {
+  var encodeUtf8 = function (str) {
     var v1,
       v2,
       v3,
@@ -266,7 +272,7 @@
       v5,
       code,
       end = false,
-      base32Str = '',
+      base32Str = "",
       index = 0,
       i,
       start = 0,
@@ -288,7 +294,9 @@
           blocks[i++] = 0x80 | ((code >> 6) & 0x3f);
           blocks[i++] = 0x80 | (code & 0x3f);
         } else {
-          code = 0x10000 + (((code & 0x3ff) << 10) | (str.charCodeAt(++index) & 0x3ff));
+          code =
+            0x10000 +
+            (((code & 0x3ff) << 10) | (str.charCodeAt(++index) & 0x3ff));
           blocks[i++] = 0xf0 | (code >> 18);
           blocks[i++] = 0x80 | ((code >> 12) & 0x3f);
           blocks[i++] = 0x80 | ((code >> 6) & 0x3f);
@@ -319,7 +327,10 @@
           BASE32_ENCODE_CHAR[((v4 << 3) | (v5 >>> 5)) & 31] +
           BASE32_ENCODE_CHAR[v5 & 31];
       } else if (i === 1) {
-        base32Str += BASE32_ENCODE_CHAR[v1 >>> 3] + BASE32_ENCODE_CHAR[(v1 << 2) & 31] + '======';
+        base32Str +=
+          BASE32_ENCODE_CHAR[v1 >>> 3] +
+          BASE32_ENCODE_CHAR[(v1 << 2) & 31] +
+          "======";
       } else if (i === 2) {
         v2 = blocks[1];
         base32Str +=
@@ -327,7 +338,7 @@
           BASE32_ENCODE_CHAR[((v1 << 2) | (v2 >>> 6)) & 31] +
           BASE32_ENCODE_CHAR[(v2 >>> 1) & 31] +
           BASE32_ENCODE_CHAR[(v2 << 4) & 31] +
-          '====';
+          "====";
       } else if (i === 3) {
         v2 = blocks[1];
         v3 = blocks[2];
@@ -337,7 +348,7 @@
           BASE32_ENCODE_CHAR[(v2 >>> 1) & 31] +
           BASE32_ENCODE_CHAR[((v2 << 4) | (v3 >>> 4)) & 31] +
           BASE32_ENCODE_CHAR[(v3 << 1) & 31] +
-          '===';
+          "===";
       } else {
         v2 = blocks[1];
         v3 = blocks[2];
@@ -350,19 +361,19 @@
           BASE32_ENCODE_CHAR[((v3 << 1) | (v4 >>> 7)) & 31] +
           BASE32_ENCODE_CHAR[(v4 >>> 2) & 31] +
           BASE32_ENCODE_CHAR[(v4 << 3) & 31] +
-          '=';
+          "=";
       }
     } while (!end);
     return base32Str;
   };
 
-  var encodeBytes = function(bytes) {
+  var encodeBytes = function (bytes) {
     var v1,
       v2,
       v3,
       v4,
       v5,
-      base32Str = '',
+      base32Str = "",
       length = bytes.length;
     for (var i = 0, count = parseInt(length / 5) * 5; i < count; ) {
       v1 = bytes[i++];
@@ -385,7 +396,10 @@
     var remain = length - count;
     if (remain === 1) {
       v1 = bytes[i];
-      base32Str += BASE32_ENCODE_CHAR[v1 >>> 3] + BASE32_ENCODE_CHAR[(v1 << 2) & 31] + '======';
+      base32Str +=
+        BASE32_ENCODE_CHAR[v1 >>> 3] +
+        BASE32_ENCODE_CHAR[(v1 << 2) & 31] +
+        "======";
     } else if (remain === 2) {
       v1 = bytes[i++];
       v2 = bytes[i];
@@ -394,7 +408,7 @@
         BASE32_ENCODE_CHAR[((v1 << 2) | (v2 >>> 6)) & 31] +
         BASE32_ENCODE_CHAR[(v2 >>> 1) & 31] +
         BASE32_ENCODE_CHAR[(v2 << 4) & 31] +
-        '====';
+        "====";
     } else if (remain === 3) {
       v1 = bytes[i++];
       v2 = bytes[i++];
@@ -405,7 +419,7 @@
         BASE32_ENCODE_CHAR[(v2 >>> 1) & 31] +
         BASE32_ENCODE_CHAR[((v2 << 4) | (v3 >>> 4)) & 31] +
         BASE32_ENCODE_CHAR[(v3 << 1) & 31] +
-        '===';
+        "===";
     } else if (remain === 4) {
       v1 = bytes[i++];
       v2 = bytes[i++];
@@ -419,13 +433,13 @@
         BASE32_ENCODE_CHAR[((v3 << 1) | (v4 >>> 7)) & 31] +
         BASE32_ENCODE_CHAR[(v4 >>> 2) & 31] +
         BASE32_ENCODE_CHAR[(v4 << 3) & 31] +
-        '=';
+        "=";
     }
     return base32Str;
   };
 
-  var encode = function(input, asciiOnly) {
-    var notString = typeof input !== 'string';
+  var encode = function (input, asciiOnly) {
+    var notString = typeof input !== "string";
     if (notString && input.constructor === ArrayBuffer) {
       input = new Uint8Array(input);
     }
@@ -438,12 +452,12 @@
     }
   };
 
-  var decode = function(base32Str, asciiOnly) {
+  var decode = function (base32Str, asciiOnly) {
     if (!asciiOnly) {
       return toUtf8String(decodeAsBytes(base32Str));
     }
     if (!/^[A-Z2-7=]+$/.test(base32Str)) {
-      throw new Error('Invalid base32 characters');
+      throw new Error("Invalid base32 characters");
     }
     var v1,
       v2,
@@ -453,8 +467,8 @@
       v6,
       v7,
       v8,
-      str = '',
-      length = base32Str.indexOf('=');
+      str = "",
+      length = base32Str.indexOf("=");
     if (length === -1) {
       length = base32Str.length;
     }
@@ -529,10 +543,10 @@
   } else {
     root.base32 = exports;
     if (AMD) {
-      define(function() {
+      define(function () {
         return exports;
       });
     }
   }
-  console.log(encode(process.argv[2]));
+  console.log(`userdb-${encode(process.argv[2]).toLowerCase()}`);
 })();

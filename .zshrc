@@ -135,12 +135,24 @@ alias pp="pbpaste"
 alias tts="tmuxinator start"
 alias tk="tmux kill-session -t"
 alias d="docker"
+alias t="taskell"
+alias updatedoc="bash ~/Private/nano/update_doc.sh"
+alias readdoc="bash ~/Private/nano/read_doc.sh"
+
+setopt extended_glob
 
 stty -ixon
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+#
+# Setting fd as the default source for fzf
+export FZF_DEFAULT_COMMAND='fd --type f'
+
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 source ~/vim/shell/completion.zsh
 source ~/vim/shell/key-bindings.zsh
 
 copy(){ osascript -e{'on run{a}','set the clipboard to posix file a',end} "$(greadlink -f -- "$1")";}
+[ -f "/Users/alex/.ghcup/env" ] && source "/Users/alex/.ghcup/env" # ghcup-env
