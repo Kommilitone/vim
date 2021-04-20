@@ -16,8 +16,10 @@ Plugin 'jiangmiao/auto-pairs.git'
 Plugin 'terryma/vim-expand-region.git'
 Plugin 'tpope/vim-surround.git'
 Plugin 'tpope/vim-repeat.git'
+Plugin 'tpope/vim-projectionist.git'
 Plugin 'airblade/vim-gitgutter.git'
 Plugin 'itchyny/lightline.vim.git'
+Plugin 'chrisbra/csv.vim.git'
 Plugin 'terryma/vim-multiple-cursors.git'
 Plugin 'sheerun/vim-polyglot.git'
 Plugin 'diepm/vim-rest-console'
@@ -27,9 +29,10 @@ Plugin 'tomtom/tcomment_vim.git'
 Plugin 'chrisbra/Colorizer.git'
 Plugin 'justinmk/vim-sneak.git'
 Plugin 'mattn/emmet-vim.git'
-Plugin 'preservim/tagbar.git'
-Plugin 'kassio/neoterm.git'
+Plugin 'christoomey/vim-tmux-navigator.git'
+Plugin 'heavenshell/vim-jsdoc.git'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -171,9 +174,6 @@ let g:EasyMotion_smartcase = 1
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 
-" Smart way to move between windows
-map H <C-W>h
-map L <C-W>l
 
 " Close the current buffer
 map <leader>d :Bclose<cr>:tabclose<cr>gT
@@ -295,9 +295,9 @@ catch
   set diffopt-=internal
 endtry
 
-map <leader>l :diffget 3<cr>
-map <leader>h :diffget 2<cr>
-map <leader>1 :diffget<cr>
+nmap <leader>l :diffget 3<cr>
+nmap <leader>h :diffget 2<cr>
+nmap <leader>1 :diffget<cr>
 
 " How many spaces are used as Tab
 set tabstop=2
@@ -312,7 +312,8 @@ let g:javascript_plugin_flow = 1
 
 " nnoremap <Space> <C-^>
 
-" :set splitright
+set splitbelow
+set splitright
 
 nnoremap <leader>c :%!python -m json.tool<CR>
 
@@ -379,16 +380,6 @@ nmap <c-q> :Files<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:lightline = {
-"       \ 'colorscheme': 'wombat',
-"       \ 'active': {
-"       \   'left': [ [ 'mode', 'paste' ],
-"       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-"       \ },
-"       \ 'component_function': {
-"       \   'gitbranch': 'FugitiveHead'
-"       \ },
-"       \ }
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -541,12 +532,13 @@ let g:sneak#use_ic_scs = 1
 let g:livepreview_previewer = 'open -a Preview'
 
 " for working with latex
-map <leader>f :silent !pdflatex --interaction=batchmode cv.tex && open -a Preview cv.pdf<CR>
+nmap <leader>e :silent !pdflatex --interaction=batchmode _main.tex && open -a Preview _main.pdf<CR>
+
 
 nmap <C-E> :Rg <CR>
 
-nmap <C-L> :Lines <CR>
-nmap <C-B> :BLines <CR>
+" nmap <C-L> :Lines <CR>
+nmap <C-B> :Lines <CR>
 
 " for fzf preview window
 let $BAT_THEME='gruvbox'
@@ -555,7 +547,7 @@ let $BAT_THEME='gruvbox'
 let g:fzf_height = 100
 
 " FZF rg layout
-command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!{apps/android/*,apps/ios/*,apps/puppeteer/*,apps/kereneia/*,src/data/*,src/client/translations/*,src/client/modules/translations/*,package*}' --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'down:70%', 'ctrl-/'), <bang>0)
+command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!{apps/android/*,apps/ios/*,apps/puppeteer/*,apps/kereneia/*,src/data/*,src/client/translations/*,src/client/modules/translations/*,package*}' --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview('down:70%', 'ctrl-/'), <bang>0)
 
 " Set marks for last open filetype
 nnoremap <Space>c 'C
@@ -564,18 +556,43 @@ nnoremap <Space>s 'S
 nnoremap <Space>t 'T
 nnoremap <Space>x 'X
 nnoremap <Space>h 'H
+nnoremap <Space>y 'Y
 
 augroup VIMRC
   autocmd!
-  autocmd BufLeave *.css,*.scss normal! mC
-  autocmd BufLeave *.json       normal! mS
-  autocmd BufLeave *.js,*.ts    normal! mJ
-  autocmd BufLeave *.test.js    normal! mT
-  autocmd BufLeave *.jsx        normal! mX
-  autocmd BufLeave *.html       normal! mH
+  autocmd BufLeave *.css,*.scss           normal! mC
+  autocmd BufLeave *.json                 normal! mS
+  autocmd BufLeave */src/*.js,*/src/*.ts  normal! mJ
+  autocmd BufLeave *.test.js,*.test.ts    normal! mT
+  autocmd BufLeave *.jsx,*.tsx            normal! mX
+  autocmd BufLeave *.html                 normal! mH
+  autocmd BufLeave */src/types/*.ts       normal! mY
 augroup END
 
-nmap <C-t> :TagbarToggle <CR>
-let g:tagbar_width = 80
-
 nnoremap <leader>vs :exec "!code " . expand("%:p") <CR>:redraw!<CR> 
+
+" quicker split movement
+nmap <C-H> <C-W>h
+nmap <C-L> <C-W>l
+nmap <C-J> <C-W>j
+nmap <C-K> <C-W>k
+
+nmap <C-n> :History <CR>
+nmap <cr> :History: <CR>
+
+set viminfo='500
+
+" vim projectionist
+nnoremap <Leader>a :A<CR>
+
+" Stop that stupid window from popping up
+map q: :q
+
+nmap <leader>f :CocFix<CR>
+
+" dont save { and } jumps to jump history
+:nnoremap <silent> } :<C-u>execute 'keepjumps normal!' v:count1 . '}'<CR>
+:nnoremap <silent> { :<C-u>execute 'keepjumps normal!' v:count1 . '{'<CR>
+
+" esc on kj
+:imap kj <Esc>

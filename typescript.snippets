@@ -25,7 +25,7 @@
 # Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
 
 snippet clo "console.log()" i
-console.log($1)
+console.log
 endsnippet
 
 snippet switch "switch" b
@@ -100,9 +100,7 @@ endsnippet
 
 snippet describe "describe" b
 describe('$1', () => {
-  it('$2', $3 () => {
-		$4
-  });
+
 });
 endsnippet
 
@@ -114,11 +112,7 @@ endsnippet
 
 snippet it "it" b
 it('$1', $2 () => {
-  const input = $3
-
-  const res = $4
-
-  expect(res).$5($6);
+	$3
 });
 endsnippet
 
@@ -149,22 +143,4 @@ endsnippet
 snippet arr "arr" i
 ($1) => $2
 endsnippet
-
-snippet t "type" i
-($1: $2)$3
-endsnippet
-
-snippet as "import" b
-import $1 as $2 from '$3';
-endsnippet
-
-snippet im "import" b
-import {$1} from '$2';
-endsnippet
-
-snippet fn "function" b
-let $1: ($2 : $3) => $4; 
-$1 = ($2) => $5
-endsnippet
-
 

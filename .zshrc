@@ -72,6 +72,7 @@ plugins=(
   zsh-syntax-highlighting
   urltools
   vi-mode
+  colored-man-pages
 )
   # web-search
 
@@ -111,7 +112,6 @@ alias en="trans :en"
 alias de="trans :de"
 alias r="ranger"
 alias chrome="open -a 'Google Chrome'"
-alias json="python -m json.tool"
 alias o="open"
 alias cs="cht.sh"
 alias nbrew="HOMEBREW_NO_AUTO_UPDATE=1 brew install"
@@ -132,12 +132,12 @@ alias gs="grunt setup"
 alias gsd="grunt setup default"
 alias pc="pbcopy"
 alias pp="pbpaste"
-alias tts="tmuxinator start"
+alias tts="bash ~/vim/start.sh"
 alias tk="tmux kill-session -t"
-alias d="docker"
 alias t="taskell"
 alias updatedoc="bash ~/Private/nano/update_doc.sh"
 alias readdoc="bash ~/Private/nano/read_doc.sh"
+alias tnode="ts-node -T"
 
 setopt extended_glob
 
@@ -156,3 +156,15 @@ source ~/vim/shell/key-bindings.zsh
 
 copy(){ osascript -e{'on run{a}','set the clipboard to posix file a',end} "$(greadlink -f -- "$1")";}
 [ -f "/Users/alex/.ghcup/env" ] && source "/Users/alex/.ghcup/env" # ghcup-env
+
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
