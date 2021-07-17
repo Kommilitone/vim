@@ -30,7 +30,7 @@ Plugin 'chrisbra/Colorizer.git'
 Plugin 'justinmk/vim-sneak.git'
 Plugin 'mattn/emmet-vim.git'
 Plugin 'christoomey/vim-tmux-navigator.git'
-Plugin 'heavenshell/vim-jsdoc.git'
+Plugin 'AndrewRadev/switch.vim.git'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
 
@@ -295,8 +295,8 @@ catch
   set diffopt-=internal
 endtry
 
-nmap <leader>l :diffget 3<cr>
-nmap <leader>h :diffget 2<cr>
+nmap <leader>l :diffget //3<cr>
+nmap <leader>h :diffget //2<cr>
 nmap <leader>1 :diffget<cr>
 
 " How many spaces are used as Tab
@@ -547,7 +547,8 @@ let $BAT_THEME='gruvbox'
 let g:fzf_height = 100
 
 " FZF rg layout
-command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!{apps/android/*,apps/ios/*,apps/puppeteer/*,apps/kereneia/*,src/data/*,src/client/translations/*,src/client/modules/translations/*,package*}' --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview('down:70%', 'ctrl-/'), <bang>0)
+" command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!{apps/android/*,apps/ios/*,apps/puppeteer/*,apps/kereneia/*,src/data/*,src/client/translations/*,src/client/modules/translations/*,package*}' --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview('down:70%', 'ctrl-/'), <bang>0)
+command! -bang -nargs=* Rg call fzf#vim#grep("rg -g '!{apps/android/*,apps/ios/*,apps/puppeteer/*,apps/kereneia/*,src/data/*,src/client/translations/*,src/client/modules/translations/*,package*}' --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'down:70%', 'ctrl-/'), <bang>0)
 
 " Set marks for last open filetype
 nnoremap <Space>c 'C
@@ -578,7 +579,7 @@ nmap <C-J> <C-W>j
 nmap <C-K> <C-W>k
 
 nmap <C-n> :History <CR>
-nmap <cr> :History: <CR>
+nmap <C-m> :History: <CR>
 
 set viminfo='500
 
@@ -596,3 +597,15 @@ nmap <leader>f :CocFix<CR>
 
 " esc on kj
 :imap kj <Esc>
+
+nmap <leader>b :Git blame <cr>
+
+" trigger autocompletion
+inoremap <silent><expr> <c-e> coc#refresh()
+
+let g:vrc_curl_opts = {
+            \ '--connect-timeout' : 10,
+            \ '-i': '',
+            \}
+
+unmap <cr>

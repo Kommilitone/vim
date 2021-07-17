@@ -138,6 +138,19 @@ alias t="taskell"
 alias updatedoc="bash ~/Private/nano/update_doc.sh"
 alias readdoc="bash ~/Private/nano/read_doc.sh"
 alias tnode="ts-node -T"
+alias create-module="node ~/Private/cli-creator/dist/index.js"
+
+function cd() {
+    emulate -LR zsh
+    builtin cd $@ &&
+    ll
+}
+
+function z() {
+    emulate -LR zsh
+    builtin z $@ &&
+    ll
+}
 
 setopt extended_glob
 

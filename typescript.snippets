@@ -38,64 +38,8 @@ switch ($1) {
 }
 endsnippet
 
-snippet then "then" b
-	.then(function($1){
-		$2
-	})
-endsnippet
-
-snippet catch "catch" b
-	.catch(function($1){
-		$2
-	})
-endsnippet
-
-snippet fun "fun" i
-function($1) {
-	$2
-}$3
-endsnippet
-
-snippet pro "prototype" i
-$1.prototype.$2 = function($3) {
-	$4
-};
-endsnippet
-
 snippet self "self" b
 var self = this;
-endsnippet
-
-snippet forEach "forEach" b
-$1.forEach(function($2) {
-	$3
-})
-endsnippet
-
-snippet map "map" b
-$1.map(function($2) {
-	$3
-})
-endsnippet
-
-snippet filter "filter" b
-$1.filter(function($2) {
-	$3
-})
-endsnippet
-
-snippet reduce "reduce" b
-$1.reduce(function($2) {
-	$4
-}, $3)
-endsnippet
-
-snippet on "event" b
-$1.on('$2', $3);
-endsnippet
-
-snippet camel "camel" i
-// eslint-disable-line camelcase
 endsnippet
 
 snippet describe "describe" b
@@ -128,19 +72,22 @@ snippet toHaveBeenCalledTimes "toHaveBeenCalledTimes" b
 expect($1).toHaveBeenCalledTimes($2);
 endsnippet
 
-snippet unit "unit" b
-/////////////////////////////////////////////////////////////////////////////
-///////////////////////////// UNIT TESTS ////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-endsnippet
-
-snippet integration "integration" b
-/////////////////////////////////////////////////////////////////////////////
-////////////////////////// INTEGRATION TESTS ////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-endsnippet
-
 snippet arr "arr" i
 ($1) => $2
 endsnippet
 
+snippet TE "TE" i
+import * as TE from "fp-ts/lib/TaskEither";
+endsnippet
+
+snippet TA "Task" i
+import * as T from "fp-ts/lib/Task";
+endsnippet
+
+snippet EI "EI" i
+import * as E from "fp-ts/lib/Either";
+endsnippet
+
+snippet O "O" i
+import * as O from "fp-ts/lib/Option";
+endsnippet
