@@ -22,28 +22,31 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
--- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>", opts)
-keymap("n", "<C-Down>", ":resize +2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+-- Tabs
+keymap("n", "<leader>1", "<cmd>tabn 1<CR>", opts)
+keymap("n", "<leader>2", "<cmd>tabn 2<CR>", opts)
+keymap("n", "<leader>3", "<cmd>tabn 3<CR>", opts)
+keymap("n", "<leader>4", "<cmd>tabn 4<CR>", opts)
+keymap("n", "<leader>5", "<cmd>tabn 5<CR>", opts)
+keymap("n", "<leader>6", "<cmd>tabn 6<CR>", opts)
+keymap("n", "<leader>7", "<cmd>tabn 7<CR>", opts)
+keymap("n", "<leader>8", "<cmd>tabn 8<CR>", opts)
+keymap("n", "<leader>9", "<cmd>tabn 9<CR>", opts)
+keymap("n", "<leader>t", "<cmd>tabnew<CR>", opts)
 
--- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts)
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
+-- Quick file operations
+keymap("n", "<leader>w", "<cmd>w<CR>", opts)
+keymap("n", "<leader>q", "<cmd>q<CR>", opts)
+
+-- Ranger
+keymap("n", "<C-p>", "<cmd>RnvimrToggle<CR>", opts)
 
 -- Clear highlights
-keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
-
--- Close buffers
-keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
-
--- Better paste
-keymap("v", "p", '"_dP', opts)
+keymap("n", "<leader><cr>", "<cmd>nohlsearch<CR>", opts)
 
 -- Insert --
 -- Press jk fast to enter
-keymap("i", "jk", "<ESC>", opts)
+keymap("i", "kj", "<ESC>", opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -52,14 +55,10 @@ keymap("v", ">", ">gv", opts)
 
 -- Plugins --
 
--- NvimTree
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
-
 -- Telescope
-keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
-keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
-keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
+keymap("n", "<C-f>", ":Telescope find_files<CR>", opts)
+keymap("n", "<C-e>", ":Telescope live_grep<CR>", opts)
+keymap("n", "§", ":Telescope buffers<CR>", opts)
 
 -- Git
 keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
