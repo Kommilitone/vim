@@ -53,19 +53,29 @@ keymap("i", "kj", "<ESC>", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
+-- QuickFix
+keymap("n", "<leader>cl", "<cmd>ccl<CR>", opts)
+
 -- Plugins --
+keymap("n", "<Right>", "<cmd>BufSurfForward<CR>", opts)
+keymap("n", "<Left>", "<cmd>BufSurfBack<CR>", opts)
+keymap("n", "\\", "<cmd>TComment<CR>", opts)
+keymap("n", "<leader>a", "<cmd>A<CR>", opts)
+keymap("n", "<leader>b", "<cmd>Git blame<CR>", opts)
+
+-- Misc
+-- Behave like Vims other bindings (C, D etc.)
+keymap("n", "Y", "y$", opts)
 
 -- Telescope
 keymap("n", "<C-f>", ":Telescope find_files<CR>", opts)
 keymap("n", "<C-e>", ":Telescope live_grep<CR>", opts)
 keymap("n", "§", ":Telescope buffers<CR>", opts)
+keymap("n", "<C-n>", ":Telescope command_history<CR>", opts)
+keymap("n", "z", ":Telescope oldfiles<CR>", opts)
 
 -- Git
 keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
-
--- Comment
-keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
-keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
 
 -- DAP
 keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
