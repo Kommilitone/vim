@@ -11,7 +11,8 @@ local servers = {
   "bashls",
   "jsonls",
   "yamlls",
-  "eslint"
+  "eslint",
+  "emmet_ls"
 }
 
 lsp_installer.setup()

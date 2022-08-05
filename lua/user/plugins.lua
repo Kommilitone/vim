@@ -50,31 +50,29 @@ return packer.startup(function(use)
   use { "nvim-lualine/lualine.nvim", commit = "3362b28f917acc37538b1047f187ff1b5645ecdd" }
   use { "akinsho/toggleterm.nvim", commit = "aaeed9e02167c5e8f00f25156895a6fd95403af8" }
   use { "lewis6991/impatient.nvim", commit = "969f2c5c90457612c09cf2a13fee1adaa986d350" }
+  use { "kylechui/nvim-surround", config = function() require("nvim-surround").setup({}) end }
 
   use 'tpope/vim-fugitive'
   use 'terryma/vim-expand-region'
-  use 'tpope/vim-surround'
-  use 'tpope/vim-repeat'
   use 'tpope/vim-projectionist'
   use 'tpope/vim-unimpaired'
   use 'airblade/vim-gitgutter'
-  use 'chrisbra/csv.vim'
   use 'diepm/vim-rest-console'
   use 'dyng/ctrlsf.vim'
   use 'kevinhwang91/rnvimr'
   use 'chrisbra/Colorizer'
-  use 'mattn/emmet-vim'
   use 'christoomey/vim-tmux-navigator'
   use 'ton/vim-bufsurf'
   use 'justinmk/vim-sneak'
   use 'weirongxu/plantuml-previewer.vim'
-  use {'iamcco/markdown-preview.nvim',  run = 'cd app && yarn install'  }
+  use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
   use 'aklt/plantuml-syntax'
   use 'tomtom/tcomment_vim'
 
   -- Colorschemes
   -- use 'morhetz/gruvbox'
   use 'sainnhe/gruvbox-material'
+  use 'ellisonleao/gruvbox.nvim'
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" } -- The completion plugin
@@ -92,10 +90,12 @@ return packer.startup(function(use)
   use { "neovim/nvim-lspconfig", commit = "148c99bd09b44cf3605151a06869f6b4d4c24455" } -- enable LSP
   use { "williamboman/nvim-lsp-installer", commit = "e9f13d7acaa60aff91c58b923002228668c8c9e6" } -- simple to use language server installer
   use { "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" } -- for formatters and linters
-  use({ 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' })
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
+  use 'nvim-telescope/telescope-ui-select.nvim'
+  use { 'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
   -- Treesitter
   use {

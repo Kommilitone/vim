@@ -5,8 +5,6 @@ end
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
 local formatting = null_ls.builtins.formatting
--- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-local diagnostics = null_ls.builtins.diagnostics
 
 -- https://github.com/prettier-solidity/prettier-plugin-solidity
 null_ls.setup {
@@ -16,10 +14,8 @@ null_ls.setup {
       extra_filetypes = { "toml" },
       extra_args = { "--single-quote", "--jsx-single-quote" },
     },
-    formatting.black.with { extra_args = { "--fast" } },
     formatting.stylua,
-    formatting.google_java_format,
-    diagnostics.flake8,
+    formatting.eslint
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
@@ -28,9 +24,8 @@ null_ls.setup {
         group = augroup,
         buffer = bufnr,
         callback = function()
-          -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-          -- vim.lsp.buf.format({ bufnr = bufnr })
-          vim.cmd([[ :EslintFixAll ]])
+          vim.lsp.buf.format({ bufnr = bufnr })
+          -- vim.cmd([[ :EslintFixAll ]])
         end,
       })
     end
