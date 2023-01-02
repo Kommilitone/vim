@@ -1,5 +1,6 @@
 -- Shorten function name
 local keymap = vim.keymap.set
+
 -- Silent keymap option
 local opts = { silent = true }
 
@@ -59,9 +60,12 @@ keymap("n", "<leader>cl", "<cmd>ccl<CR>", opts)
 -- Plugins --
 keymap("n", "<Right>", "<cmd>BufSurfForward<CR>", opts)
 keymap("n", "<Left>", "<cmd>BufSurfBack<CR>", opts)
-keymap("n", "\\", "<cmd>TComment<CR>", opts)
+keymap("n", "\\", "gcc", opts)
 keymap("n", "<leader>a", "<cmd>A<CR>", opts)
 keymap("n", "<leader>b", "<cmd>Git blame<CR>", opts)
+keymap("n", "<leader>l", "<cmd>diffget //3<CR>", opts)
+keymap("n", "<leader>h", "<cmd>diffget //2<CR>", opts)
+-- keymap("n", "<leader>1", "<cmd>diffget<CR>", opts)
 
 -- Misc
 -- Behave like Vims other bindings (C, D etc.)
@@ -73,6 +77,7 @@ keymap("n", "<C-e>", ":Telescope live_grep<CR>", opts)
 keymap("n", "§", ":Telescope buffers<CR>", opts)
 keymap("n", "<C-n>", ":Telescope command_history<CR>", opts)
 keymap("n", "z", ":Telescope oldfiles<CR>", opts)
+keymap("n", "<C-q>", ":Telescope diagnostics<CR>", opts)
 
 -- Git
 keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)

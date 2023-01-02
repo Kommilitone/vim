@@ -20,9 +20,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 
 vim.cmd "autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif"
 
--- vim.cmd "autocmd BufWritePre *.js :lua vim.lsp.buf.format()"
--- vim.cmd "autocmd BufWritePre *.js :EslintFixAll"
-
 -- Fixes Autocomment
 vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
   callback = function()

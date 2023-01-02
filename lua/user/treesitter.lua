@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 configs.setup({
-	ensure_installed = "all", -- one of "all" or a list of languages
+  ensure_installed = { "tsx", "lua", "rust", "typescript", "javascript" },
 	ignore_install = { "" }, -- List of parsers to ignore installing
 	highlight = {
 		enable = true, -- false will disable the whole extension
@@ -14,4 +14,11 @@ configs.setup({
 		enable = true,
 	},
 	indent = { enable = true, disable = { "python", "css" } },
+	context_commentstring = {
+		enable = true,
+		enable_autocmd = false,
+		config = {
+			typescript = { __default = "// %s", __multiline = "/* %s */" },
+		},
+	},
 })

@@ -17,13 +17,13 @@ ls.config.set_config({
 	-- 	},
 	-- },
 })
-vim.keymap.set({ "i", "s" }, "<c-k>", function()
+vim.keymap.set({ "i", "s" }, "<c-j>", function()
 	if ls.expand_or_jumpable() then
 		ls.expand_or_jump()
 	end
 end)
 
-vim.keymap.set({ "i", "s" }, "<c-j>", function()
+vim.keymap.set({ "i", "s" }, "<c-k>", function()
 	if ls.jumpable(-1) then
 		ls.jump(-1)
 	end
@@ -55,13 +55,13 @@ local function capitalize(args)
 	return str:sub(1, 1):upper() .. str:sub(2)
 end
 
-ls.add_snippets('all', {
-  s("clo", {
-    t("console.log")
-  }),
-  s("arr", {
-    t("() => ")
-  })
+ls.add_snippets("all", {
+	s("clo", {
+		t("console.log"),
+	}),
+	s("arr", {
+		t("() => "),
+	}),
 })
 
 ls.add_snippets("typescriptreact", {
@@ -117,7 +117,7 @@ ls.add_snippets("typescriptreact", {
 		t(" {"),
 		t("\t"),
 		i(0),
-		t({"", "}"}),
+		t({ "", "}" }),
 	}),
 	s("ue", {
 		t({ "useEffect(() => {", "\t" }),

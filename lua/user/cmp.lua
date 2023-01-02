@@ -8,7 +8,7 @@ if not snip_status_ok then
 	return
 end
 
-require("luasnip/loaders/from_vscode").lazy_load()
+-- require("luasnip/loaders/from_vscode").lazy_load()
 
 local check_backspace = function()
 	local col = vim.fn.col(".") - 1
@@ -51,8 +51,8 @@ cmp.setup({
 	},
 
 	mapping = cmp.mapping.preset.insert({
-		["<C-k>"] = cmp.mapping.select_prev_item(),
-		["<C-j>"] = cmp.mapping.select_next_item(),
+		-- ["<C-k>"] = cmp.mapping.select_prev_item(),
+		-- ["<C-j>"] = cmp.mapping.select_next_item(),
 		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
 		["<C-e>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -101,18 +101,26 @@ cmp.setup({
 				nvim_lua = "",
 				luasnip = "",
 				buffer = "",
-				path = "",
-				emoji = "",
+				-- path = "",
+				-- emoji = "",
 			})[entry.source.name]
 			return vim_item
 		end,
 	},
 	sources = {
-		{ name = "nvim_lsp" },
+		{ name = "nvim_lsp", max_item_count = 30 }, -- tsserver likes to send back _everything_
 		{ name = "nvim_lua" },
-		{ name = "luasnip" },
-		{ name = "buffer" },
+		{
+			name = "buffer",
+			option = {
+				get_bufnrs = function()
+					return vim.api.nvim_list_bufs()
+				end,
+			},
+		},
 		{ name = "path" },
+		{ name = "emmet_ls" },
+		{ name = "luasnip" },
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
@@ -123,6 +131,6 @@ cmp.setup({
 		documentation = cmp.config.window.bordered(),
 	},
 	experimental = {
-		ghost_text = true,
+		ghost_text = false,
 	},
 })
