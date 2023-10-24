@@ -1,0 +1,12 @@
+name: EcoClean
+root: ~/
+
+windows:
+  - Main:
+    - cd ~/WebstormProjects/JS-ApproLogic-EcoClean
+    - nvim
+  - Edits:
+    - cd ~/WebstormProjects/JS-ApproLogic-EcoClean
+  - Runs:
+    - cd ~/WebstormProjects/JS-ApproLogic-EcoClean
+    - npm run dev

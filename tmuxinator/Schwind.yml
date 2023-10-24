@@ -1,0 +1,12 @@
+name: Schwind
+root: ~/
+
+windows:
+  - Main:
+    - cd ~/WebstormProjects/JS-ApproLogic-Schwind
+    - nvim
+  - Edits:
+    - cd ~/WebstormProjects/JS-ApproLogic-Schwind
+  - Runs:
+    - cd ~/WebstormProjects/JS-ApproLogic-Schwind
+    - npm run dev

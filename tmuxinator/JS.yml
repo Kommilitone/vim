@@ -1,0 +1,15 @@
+name: JS
+root: ~/
+
+windows:
+  - Main:
+      layout: 6f8a,238x66,0,0{177x66,0,0,16,60x66,178,0,17}
+      panes:
+        - vim:
+            - cd ~/Private/JS
+            - sleep 0.5 && nvim
+        - test:
+            - cd ~/Private/JS
+            - npm run test
+  - Runs:
+      - cd ~/Private/JS

@@ -1,0 +1,12 @@
+name: Sirona
+root: ~/
+
+windows:
+  - Main:
+    - cd ~/WebstormProjects/JS-ApproLogic-Sirona
+    - nvim
+  - Edits:
+    - cd ~/WebstormProjects/JS-ApproLogic-Sirona
+  - Runs:
+    - cd ~/WebstormProjects/JS-ApproLogic-Sirona
+    - npm run dev
