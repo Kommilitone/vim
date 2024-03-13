@@ -19,6 +19,13 @@ ZSH_THEME="robbyrussell"
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
+DISABLE_MAGIC_FUNCTIONS=true
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -72,6 +79,7 @@ plugins=(
   zsh-syntax-highlighting
   vi-mode
   zsh-interactive-cd
+  gnu-utils
 )
   # web-search
 
@@ -79,38 +87,26 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:/opt/homebrew/opt/grep/libexec/gnuman:/opt/homebrew/opt/gsed/libexec/gnuman:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-export EDITOR='nvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
 alias zconf="vim ~/.zshrc"
-alias vconf="vim ~/.vimrc"
 alias tconf="vim ~/.tmux.conf"
-
 alias en="trans :en"
 alias de="trans :de"
 alias r="ranger"
-alias chrome="open -a 'Google Chrome'"
 alias o="open"
 alias cs="cht.sh"
 alias nbrew="HOMEBREW_NO_AUTO_UPDATE=1 brew install"
@@ -127,7 +123,6 @@ alias ts="tmux ls"
 alias tn="tmux new-session -s"
 alias cl="clear"
 alias g="grunt"
-# alias gs="grunt setup"
 alias gsd="grunt setup default"
 alias pc="tr -d '\n' | pbcopy"
 alias pp="pbpaste"
@@ -138,6 +133,7 @@ alias updatedoc="bash ~/Work/nano/update_doc.sh"
 alias readdoc="bash ~/Work/nano/read_doc.sh"
 alias tnode="TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true ts-node"
 alias create-module="node ~/Private/cli-creator/dist/index.js"
+alias ls="ls --color=auto"
 
 function cd() {
     emulate -LR zsh
@@ -163,7 +159,12 @@ setopt extended_glob
 
 stty -ixon
 
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
 #
 # Setting fd as the default source for fzf
 export FZF_DEFAULT_COMMAND='fd --type f'
@@ -177,7 +178,5 @@ source ~/vim/shell/key-bindings.zsh
 export PATH=/usr/local/bin:$PATH
 
 export NVM_DIR=~/.nvm
-# source $(brew --prefix nvm)/nvm.sh
-export PATH="/usr/local/opt/python@3.10/bin:$PATH"
+source $(brew --prefix nvm)/nvm.sh
 export PATH="/usr/local/sbin:$PATH"
-export PATH=~/.ghcup/bin:$PATH
